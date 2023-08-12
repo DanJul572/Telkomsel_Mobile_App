@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "text_value": "14 GB",
+        "expired": "30 Hari",
+        "price": "Rp99.000",
+        "discount_price": "Rp96.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 2,
+        "text_value": "27 GB",
+        "expired": "30 Hari",
+        "price": "Rp154.000",
+        "discount_price": "Rp141.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 3,
+        "text_value": "6.5 GB",
+        "expired": "30 Hari",
+        "price": "Rp63.000",
+        "discount_price": "Rp61.000",
+        "title": "Combo OMG!"
+    },
+    {
+        "id": 4,
+        "text_value": "4 GB",
+        "expired": "30 Hari",
+        "price": "Rp38.000",
+        "discount_price": "Rp35.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 5,
+        "text_value": "7 GB",
+        "expired": "30 Hari",
+        "price": "Rp63.000",
+        "discount_price": "Rp61.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 6,
+        "text_value": "52 GB",
+        "expired": "30 Hari",
+        "price": "Rp101.000",
+        "discount_price": "Rp172.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 7,
+        "text_value": "19 GB",
+        "expired": "30 Hari",
+        "price": "Rp119.000",
+        "discount_price": "Rp110.000",
+        "title": "Internet OMG!"
+    },
+    {
+        "id": 8,
+        "text_value": "30 GB",
+        "expired": "30 Hari",
+        "price": "Rp155.000",
+        "discount_price": "Rp139.000",
+        "title": "Internet OMG!"
+    }
+]

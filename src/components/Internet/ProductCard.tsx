@@ -3,26 +3,32 @@ import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_WIDTH } from '../../constans';
 
-function ProductCard ({product, isFirst, isLast}: any) {
+function ProductCard ({product, isFirst, isLast, isHorizontal}: any) {
+
+    const getWidth = () => {
+        if (isHorizontal) {
+            if (isFirst) {
+                return styles.first_container;
+            } else {
+                return styles.last_container;
+            }
+        } else {
+            return styles.horizontal_style;
+        }
+    }
 
     return (
         <View
-            style={[
-                styles.container,
-                isFirst
-                    ? styles.first_container
-                        : isLast
-                            ? styles.last_container
-                    : { }
-                ]}
-            >
+            style={[ styles.container, getWidth() ]}>
             <View style={styles.sub_container}>
-                <Text style={styles.value_text}>{product.text_value}</Text>
-                <View style={styles.expired_container}>
-                    <Icon name='hourglass-half' color={BLACK_COLOR} size={WINDOW_WIDTH * 0.03} />
-                    <Text style={styles.expired_text}>{product.expired}</Text>
+                <View style={styles.sub_container}>
+                    <Text style={styles.value_text}>{product.text_value}</Text>
+                    <View style={styles.expired_container}>
+                        <Icon name='hourglass-half' color={BLACK_COLOR} size={WINDOW_WIDTH * 0.03} />
+                        <Text style={styles.expired_text}>{product.expired}</Text>
+                    </View>
                 </View>
-                <Icon name='bookmark' color={GREY_COLOR} size={WINDOW_WIDTH * 0.065} solid />
+                <Icon name='bookmark' color={GREY_COLOR} size={WINDOW_WIDTH * 0.05} solid />
             </View>
             <View style={styles.sub_container_2}>
                 <View>
@@ -45,15 +51,20 @@ const styles = StyleSheet.create({
         marginRight: WINDOW_WIDTH * 0.025,
     },
     first_container: {
-        marginLeft: WINDOW_WIDTH * 0.05
+        marginLeft: WINDOW_WIDTH * 0.05,
+        width: WINDOW_WIDTH * 0.75
     },
     last_container: {
-        marginRight: WINDOW_WIDTH * 0.05
+        marginRight: WINDOW_WIDTH * 0.05,
+        width: WINDOW_WIDTH * 0.75
+    },
+    horizontal_style: {
+        marginBottom: WINDOW_WIDTH * 0.035,
+        width: '100%'
     },
     sub_container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: WINDOW_WIDTH * 0.6
     },
     sub_container_2: {
         flexDirection: 'row',
@@ -64,7 +75,8 @@ const styles = StyleSheet.create({
     value_text: {
         color: BLACK_COLOR,
         fontWeight: 'bold',
-        fontSize: WINDOW_WIDTH * 0.09,
+        fontSize: WINDOW_WIDTH * 0.07,
+        marginRight: WINDOW_WIDTH * 0.035,
     },
     expired_container: {
         flexDirection: 'row',
@@ -77,13 +89,13 @@ const styles = StyleSheet.create({
     },
     expired_text: {
         color: BLACK_COLOR,
-        fontSize: WINDOW_WIDTH * 0.05,
+        fontSize: WINDOW_WIDTH * 0.035,
         marginLeft: WINDOW_WIDTH * 0.02
     },
     discount_price_text: {
         color: RED_COLOR,
         fontWeight: 'bold',
-        fontSize: WINDOW_WIDTH * 0.055
+        fontSize: WINDOW_WIDTH * 0.05
     },
     price_text: {
         color: DARK_GREY_COLOR,
@@ -92,7 +104,7 @@ const styles = StyleSheet.create({
     },
     title_text: {
         color: BLACK_COLOR,
-        fontSize: WINDOW_WIDTH * 0.055,
+        fontSize: WINDOW_WIDTH * 0.05,
     }
 });
 

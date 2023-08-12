@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Keyboard, TextInput, StyleSheet, TouchableOpacity, Text, FlatList } from 'react-native';
+import { View, Keyboard, TextInput, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, TEXT_PLACEHOLDER_COLOR, WHITE_COLOR, WINDOWS_HEIGHT, WINDOW_WIDTH } from '../../constans';
+import ProductCard from './ProductCard';
+import products from '../../dummy/products.json';
+import searchPopular from '../../dummy/searchPopular.json';
+import searchHistory from '../../dummy/searchHistory.json';
 
 function Search({ keyword, setKeyword, onSearch, setOnSearch, onFilter, setOnFilter }: any) {
-    const [searchHistory, setSearchHistory] = useState([
-        'ruang guru',
-        'omg',
-        'keterangan',
-        'ilmupedia'
-    ]);
-    const [searchPopular, setSearchPopular] = useState([
-        'ruang guru',
-        'keterangan',
-        'conference',
-        'omg',
-        'ilmupedia'
-    ]);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const getHistoryComponent = (item: any) => {
         return (
@@ -39,97 +31,135 @@ function Search({ keyword, setKeyword, onSearch, setOnSearch, onFilter, setOnFil
     }
 
     return (
-        <View style={[ (onSearch) ? styles.search_conteiner_absolute : {}]}>
-            <View style={[styles.search_container]}>
-                {onFilter && (
-                    <TouchableOpacity style={styles.cancel_filter_container} activeOpacity={1} onPress={() => setOnFilter(false)}>
-                        <Icon name='chevron-left' size={WINDOW_WIDTH * 0.05} color={BLACK_COLOR} />
-                    </TouchableOpacity>
-                )}
-                <View style={styles.search_sub_container}>
-                    <TouchableOpacity style={styles.search_icon_container} activeOpacity={1}>
-                        <Icon name='search' size={WINDOW_WIDTH * 0.05} style={styles.search_icon} />
-                    </TouchableOpacity>
-                    <TextInput
-                        onFocus={() => setOnSearch(true)}
-                        value={keyword}
-                        onChangeText={setKeyword}
-                        style={[
-                            styles.search_input,
-                            (onSearch && !keyword)
-                                ? { width: WINDOW_WIDTH * 0.65, borderTopRightRadius: WINDOW_WIDTH * 0.01, borderBottomRightRadius: WINDOW_WIDTH * 0.01 }
-                                : onSearch && onFilter
-                                    ? { width: WINDOW_WIDTH * 0.7, borderTopRightRadius: WINDOW_WIDTH * 0.01, borderBottomRightRadius: WINDOW_WIDTH * 0.01 }
-                                        : onSearch && keyword
-                                            ? { width: WINDOW_WIDTH * 0.55 }
-                                            : { width: WINDOW_WIDTH * 0.8 }
-                        ]}
-                        placeholder='Cari paket vavorit kamu ...'
-                        placeholderTextColor={TEXT_PLACEHOLDER_COLOR}
-                        selectionColor={RED_COLOR}
-                        onSubmitEditing={() => setOnFilter(true)}
-                        editable={onFilter ? false : true}
-                    />
-                    {keyword && !onFilter && (
-                        <TouchableOpacity
-                            style={styles.remove_icon_container}
-                            activeOpacity={1}
-                            onPress={() => {
-                                setKeyword('');
-                            }}
-                        >
-                            <Icon name='times' size={WINDOW_WIDTH * 0.05} style={styles.remove_icon} />
-                        </TouchableOpacity>
+        <View>
+            <TouchableOpacity style={styles.search_sub_container} activeOpacity={1} onPress={() => setModalVisible(true)}>
+                <View style={styles.search_icon_container}>
+                    <Icon name='search' size={WINDOW_WIDTH * 0.05} style={styles.search_icon} />
+                </View>
+                <TextInput
+                    style={[
+                        styles.search_input, { width: WINDOW_WIDTH * 0.8 }
+                    ]}
+                    placeholder='Cari paket vavorit kamu ...'
+                    placeholderTextColor={TEXT_PLACEHOLDER_COLOR}
+                    selectionColor={RED_COLOR}
+                    editable={false}
+                />
+            </TouchableOpacity>
+            <Modal
+                animationType='slide'
+                transparent={false}
+                visible={modalVisible}
+            >
+                <View style={ styles.search_conteiner_absolute }>
+                    <View style={styles.search_container}>
+                        {onFilter && (
+                            <TouchableOpacity style={styles.cancel_filter_container} activeOpacity={1} onPress={() => setOnFilter(false)}>
+                                <Icon name='chevron-left' size={WINDOW_WIDTH * 0.05} color={BLACK_COLOR} />
+                            </TouchableOpacity>
+                        )}
+                        <View style={styles.search_sub_container}>
+                            <TouchableOpacity style={styles.search_icon_container} activeOpacity={1}>
+                                <Icon name='search' size={WINDOW_WIDTH * 0.05} style={styles.search_icon} />
+                            </TouchableOpacity>
+                            <TextInput
+                                autoFocus={true}
+                                onFocus={() => {
+                                    setOnSearch(true);
+                                }}
+                                value={keyword}
+                                onChangeText={setKeyword}
+                                style={[
+                                    styles.search_input,
+                                    (onSearch && !keyword)
+                                        ? { width: WINDOW_WIDTH * 0.65, borderTopRightRadius: WINDOW_WIDTH * 0.01, borderBottomRightRadius: WINDOW_WIDTH * 0.01 }
+                                        : onSearch && onFilter
+                                            ? { width: WINDOW_WIDTH * 0.7, borderTopRightRadius: WINDOW_WIDTH * 0.01, borderBottomRightRadius: WINDOW_WIDTH * 0.01 }
+                                            : onSearch && keyword
+                                                ? { width: WINDOW_WIDTH * 0.55 }
+                                                : { width: WINDOW_WIDTH * 0.8 }
+                                ]}
+                                placeholder='Cari paket vavorit kamu ...'
+                                placeholderTextColor={TEXT_PLACEHOLDER_COLOR}
+                                selectionColor={RED_COLOR}
+                                onSubmitEditing={() => {
+                                    setOnFilter(true);
+                                    setModalVisible(true);
+                                }}
+                                editable={onFilter ? false : true}
+                            />
+                            {keyword && !onFilter && (
+                                <TouchableOpacity
+                                    style={styles.remove_icon_container}
+                                    activeOpacity={1}
+                                    onPress={() => {
+                                        setKeyword('');
+                                    }}
+                                >
+                                    <Icon name='times' size={WINDOW_WIDTH * 0.05} style={styles.remove_icon} />
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                        {onSearch && !onFilter && (
+                            <TouchableOpacity
+                                style={styles.cancel_container}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setOnSearch(false);
+                                    setOnFilter(false);
+                                    setKeyword('');
+                                    setModalVisible(false);
+                                    Keyboard.dismiss();
+                                }}
+                            >
+                                <Text style={styles.cancel_text}>Batal</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    {onSearch && !onFilter && (
+                        <View style={styles.history_container}>
+                            <Text style={styles.history_title}>Terakhir Dicari</Text>
+                            <FlatList
+                                data={searchHistory}
+                                renderItem={({ item }) => getHistoryComponent(item)}
+                            />
+                        </View>
+                    )}
+                    {onSearch && !onFilter && (
+                        <View style={styles.history_container}>
+                            <Text style={styles.popular_title}>Pencarian Populer</Text>
+                            <View style={styles.popular_list_container}>
+                                {searchPopular.map((item, index) => getPopularComponent(item, index))}
+                            </View>
+                        </View>
+                    )}
+                    {onSearch && onFilter && (
+                        <View style={styles.filter_sort_container}>
+                            <View style={styles.filter_sub_sort_container}>
+                                <TouchableOpacity style={styles.filter_sort_button}>
+                                    <Icon name='filter' size={WINDOW_WIDTH * 0.035} color={RED_COLOR} />
+                                    <Text style={[styles.filter_sort_text, { color: RED_COLOR }]}>Filter</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.filter_sort_button}>
+                                    <Icon name='sort' size={WINDOW_WIDTH * 0.035} color={BLACK_COLOR} />
+                                    <Text style={[styles.filter_sort_text, { color: BLACK_COLOR }]}>Urutkan</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView style={{ height: WINDOWS_HEIGHT * 0.83 }}>
+                                {products.map((product: any, index: any) => {
+                                    return (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                            isFirst={index == 0 ? true : false} isLast={(index + 1) == products.length ? true : false}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                        </View>
                     )}
                 </View>
-                {onSearch && !onFilter && (
-                    <TouchableOpacity
-                        style={styles.cancel_container}
-                        activeOpacity={1}
-                        onPress={() => {
-                            setOnSearch(false);
-                            setOnFilter(false);
-                            Keyboard.dismiss();
-                        }}
-                    >
-                        <Text style={styles.cancel_text}>Batal</Text>
-                    </TouchableOpacity>
-                )}
-            </View>
-            {onSearch && !onFilter && (
-                <View style={styles.history_container}>
-                    <Text style={styles.history_title}>Terakhir Dicari</Text>
-                    <FlatList
-                        data={searchHistory}
-                        renderItem={({ item }) => getHistoryComponent(item)}
-                    />
-                </View>
-            )}
-            {onSearch && !onFilter && (
-                <View style={styles.history_container}>
-                    <Text style={styles.popular_title}>Pencarian Populer</Text>
-                    <View style={styles.popular_list_container}>
-                        {searchPopular.map((item, index) => getPopularComponent(item, index))}
-                    </View>
-                </View>
-            )}
-            {onSearch && onFilter && (
-                <View style={styles.filter_sort_container}>
-                    <View style={styles.filter_sub_sort_container}>
-                        <TouchableOpacity style={styles.filter_sort_button}>
-                            <Icon name='filter' size={WINDOW_WIDTH * 0.035} color={RED_COLOR} />
-                            <Text style={[styles.filter_sort_text, { color: RED_COLOR }]}>Filter</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.filter_sort_button}>
-                            <Icon name='sort' size={WINDOW_WIDTH * 0.035} color={BLACK_COLOR} />
-                            <Text style={[styles.filter_sort_text, { color: BLACK_COLOR }]}>Urutkan</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        
-                    </View>
-                </View>
-            )}
+            </Modal>
         </View>
     )
 }
@@ -139,17 +169,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: WINDOW_WIDTH * 0.05,
-        backgroundColor: WHITE_COLOR
+        backgroundColor: WHITE_COLOR,
     },
     search_conteiner_absolute: {
         paddingVertical: WINDOW_WIDTH * 0.05,
         height: WINDOWS_HEIGHT,
         width: WINDOW_WIDTH,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
         backgroundColor: WHITE_COLOR
     },
     cancel_filter_container: {
@@ -257,14 +282,15 @@ const styles = StyleSheet.create({
     },
     filter_sub_sort_container: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: WINDOW_WIDTH * 0.05
     },
     filter_sort_button: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: GREY_COLOR,
-        marginRight: WINDOW_WIDTH * 0.05,
+        marginRight: WINDOW_WIDTH * 0.025,
         padding: WINDOW_WIDTH * 0.025,
         borderRadius: WINDOW_WIDTH * 0.01
     },
