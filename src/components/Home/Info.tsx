@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import { BLACK_COLOR, RED_COLOR, DARK_GREY_COLOR, WHITE_COLOR, WINDOWS_HEIGHT, WINDOW_WIDTH, YELLOW_COLLOR } from '../../constans';
+import { BLACK_COLOR, RED_COLOR, DARK_GREY_COLOR, WHITE_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH, YELLOW_COLLOR } from '../../constans';
 
 function Info () {
     return (
@@ -77,7 +77,7 @@ function Info () {
 
 const styles = StyleSheet.create({
     name_background: {
-        height: WINDOWS_HEIGHT * 0.25,
+        height: WINDOW_HEIGHT * 0.25,
         backgroundColor: RED_COLOR
     },
     name_conteiner: {
@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
     },
     sim_container: {
         position: 'absolute',
-        top: WINDOWS_HEIGHT * 0.07,
+        top: WINDOW_HEIGHT * 0.07,
         width: WINDOW_WIDTH,
         alignItems: 'center',
         zIndex: 2
     },
     sim_background: {
         width: WINDOW_WIDTH * 0.9,
-        height: WINDOWS_HEIGHT * 0.25,
+        height: WINDOW_HEIGHT * 0.25,
     },
     sim_number_container: {
         flexDirection: 'row',
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         fontSize: WINDOW_WIDTH * 0.045
     },
     divider: {
-        height: WINDOWS_HEIGHT * 0.002,
+        height: WINDOW_HEIGHT * 0.002,
         backgroundColor: BLACK_COLOR,
         opacity: 0.2,
         width: '100%',
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     },
     quota_container: {
         backgroundColor: WHITE_COLOR,
-        paddingTop: WINDOWS_HEIGHT * 0.1,
+        paddingTop: WINDOW_HEIGHT * 0.1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

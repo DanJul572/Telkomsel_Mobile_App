@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Keyboard, TextInput, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView, Modal, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, TEXT_PLACEHOLDER_COLOR, WHITE_COLOR, WINDOWS_HEIGHT, WINDOW_WIDTH } from '../constans';
+import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, TEXT_PLACEHOLDER_COLOR, WHITE_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH } from '../constans';
 import ProductCard from '../components/Internet/ProductCard';
 import products from '../dummy/products.json';
 import searchPopular from '../dummy/searchPopular.json';
@@ -137,7 +137,7 @@ function Search () {
                             <Text style={[styles.filter_sort_text, { color: BLACK_COLOR }]}>Urutkan</Text>
                         </TouchableOpacity>
                     </View>
-                    <ScrollView style={{ height: WINDOWS_HEIGHT * 0.83 }}>
+                    <ScrollView style={{ height: WINDOW_HEIGHT * 0.83 }}>
                         {products.map((product: any, index: any) => {
                             return (
                                 <ProductCard
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     },
     search_conteiner_absolute: {
         paddingVertical: WINDOW_WIDTH * 0.05,
-        height: WINDOWS_HEIGHT,
+        height: WINDOW_HEIGHT,
         width: WINDOW_WIDTH,
         backgroundColor: WHITE_COLOR
     },

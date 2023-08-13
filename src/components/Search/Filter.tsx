@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Animated, Text, PanResponder, StyleSheet, Modal } from 'react-native';
-import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_WIDTH } from '../../constans';
+import { View, Animated, Text, PanResponder, StyleSheet, Modal, TextInput } from 'react-native';
+import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_WIDTH } from '../../constans';
+import Slider from '@react-native-community/slider';
 
 function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
+
+    const container_height = WINDOW_WIDTH * 0.2;
 
     useEffect(() => {
         if (modalFilterVisible) {
             Animated.timing(modalY, {
-                toValue: WINDOW_WIDTH,
+                toValue: container_height,
                 duration: 300,
                 useNativeDriver: false,
             }).start();
@@ -17,13 +20,13 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
     const closeModal = () => {
         setFilterModalVisible(false);
         Animated.timing(modalY, {
-            toValue: WINDOW_WIDTH,
+            toValue: container_height,
             duration: 300,
             useNativeDriver: false,
         }).start();
     };
 
-    const modalY = useRef(new Animated.Value(WINDOW_WIDTH)).current;
+    const modalY = useRef(new Animated.Value(container_height)).current;
 
     const gestureResponder = useRef(
         PanResponder.create({
@@ -31,15 +34,15 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
             onMoveShouldSetPanResponder: () => true,
             onPanResponderMove: (_, gestureState) => {
                 if (gestureState.dy > 0) {
-                    modalY.setValue(WINDOW_WIDTH + gestureState.dy);
+                    modalY.setValue(container_height + gestureState.dy);
                 }
             },
             onPanResponderRelease: (_, gestureState) => {
-                if (gestureState.dy > WINDOW_WIDTH / 2) {
+                if (gestureState.dy > container_height / 2) {
                     setFilterModalVisible(false);
                 } else {
                     Animated.timing(modalY, {
-                        toValue: WINDOW_WIDTH,
+                        toValue: container_height,
                         duration: 300,
                         useNativeDriver: false,
                     }).start();
@@ -65,6 +68,38 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
                         <Text style={styles.title_text}>Filter</Text>
                         <Text style={styles.delete_text}>Hapus</Text>
                     </View>
+                    <View style={styles.price_container}>
+                        <Text style={styles.price_title}>Kisaran Harga</Text>
+                        <View style={styles.price_sub_container}>
+                            <View style={styles.price_content}>
+                                <Text style={styles.price_label}>Minimal</Text>
+                                <TextInput
+                                    style={styles.price_input}
+                                    placeholderTextColor={BLACK_COLOR}
+                                    placeholder='Rp0'
+                                    selectionColor={RED_COLOR}
+                                />
+                            </View>
+                            <View style={styles.price_content}>
+                                <Text style={styles.price_label}>Maksimal</Text>
+                                <TextInput
+                                    style={styles.price_input}
+                                    placeholderTextColor={BLACK_COLOR}
+                                    placeholder='Rp250.000'
+                                    selectionColor={RED_COLOR}
+                                />
+                            </View>
+                        </View>
+                        <Slider
+                        value={125000}
+                            style={styles.price_slider}
+                            minimumValue={0}
+                            maximumValue={250000}
+                            minimumTrackTintColor={RED_COLOR}
+                            maximumTrackTintColor={GREY_COLOR}
+                            thumbTintColor={RED_COLOR}
+                        />
+                    </View>
                 </Animated.View>
             </View>
         </Modal>
@@ -79,7 +114,6 @@ const styles = StyleSheet.create({
     sub_container: {
         flex: 1,
         width: WINDOW_WIDTH,
-        height: WINDOW_WIDTH,
         backgroundColor: WHITE_COLOR,
         borderTopLeftRadius: WINDOW_WIDTH * 0.05,
         borderTopRightRadius: WINDOW_WIDTH * 0.05,
@@ -109,6 +143,44 @@ const styles = StyleSheet.create({
         color: RED_COLOR,
         fontWeight: 'bold',
         fontSize: WINDOW_WIDTH * 0.035
+    },
+    price_container: {
+        padding: WINDOW_WIDTH * 0.05
+    },
+    price_sub_container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: WINDOW_WIDTH * 0.025,
+    },
+    price_content: {
+        marginTop: WINDOW_WIDTH * 0.025,
+        width: WINDOW_WIDTH * 0.425
+    },
+    price_title: {
+        color: BLACK_COLOR,
+        fontSize: WINDOW_WIDTH * 0.04,
+        fontWeight: 'bold'
+    },
+    price_label: {
+        color: DARK_GREY_COLOR,
+        fontSize: WINDOW_WIDTH * 0.04,
+        fontWeight: '100'
+    },
+    price_input: {
+        marginTop: WINDOW_WIDTH * 0.025,
+        backgroundColor: WHITE_COLOR,
+        borderColor: BORDER_TEXT_INPUT_COLOR,
+        borderWidth: WINDOW_WIDTH * 0.0025,
+        borderRadius: WINDOW_WIDTH * 0.015,
+        fontWeight: 'bold',
+        padding: WINDOW_WIDTH * 0.025,
+        color: BLACK_COLOR,
+        width: '100%'
+    },
+    price_slider: {
+        width: '100%',
+        marginTop: WINDOW_WIDTH * 0.025
     }
 });
 

@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
-const WINDOWS_HEIGHT = Dimensions.get('window').height;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const RED_COLOR = '#EC2028';
 const DARK_GREY_COLOR = '#5A5A5A';
@@ -14,7 +14,7 @@ const BORDER_TEXT_INPUT_COLOR = '#CED6E0';
 
 export {
     WINDOW_WIDTH,
-    WINDOWS_HEIGHT,
+    WINDOW_HEIGHT,
     RED_COLOR,
     DARK_GREY_COLOR,
     WHITE_COLOR,
