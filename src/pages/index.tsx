@@ -4,6 +4,7 @@ import Help from './Help';
 import Inbox from './Inbox';
 import MyAccount from './MyAccount';
 import Internet from './Internet';
+import Search from './Search';
 
 export {
     Home,
@@ -11,5 +12,6 @@ export {
     Inbox,
     Help,
     MyAccount,
-    Internet
+    Internet,
+    Search
 }

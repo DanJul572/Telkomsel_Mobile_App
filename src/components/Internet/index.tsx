@@ -1,9 +1,9 @@
-import Search from './Search';
 import Promo from './Promo';
 import Subscribe from './Subscribe';
+import FakeInput from './FakeInput';
 
 export {
-    Search,
     Promo,
-    Subscribe
+    Subscribe,
+    FakeInput
 }

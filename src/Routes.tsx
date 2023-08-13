@@ -2,9 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, History, Help, Inbox, MyAccount, Internet } from './pages';
+import { Home, History, Help, Inbox, MyAccount, Internet, Search } from './pages';
 import { BottomTabNavigation } from './components';
-import { WHITE_COLOR } from './constans';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,6 +25,7 @@ function Routes () {
             <Stack.Navigator>
                 <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }} />
                 <Stack.Screen name="Internet" component={Internet} options={{ headerShown: false }} />
+                <Stack.Screen name="Search" component={Search} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )
