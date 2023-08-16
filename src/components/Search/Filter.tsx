@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Animated, Text, PanResponder, StyleSheet, Modal, TextInput } from 'react-native';
-import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_WIDTH } from '../../constans';
+import { View, Animated, Text, PanResponder, StyleSheet, Modal, TextInput, ScrollView } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { BLACK_COLOR, BLACK_TRANSPARENT_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../constans';
+import priceRange from '../../dummy/priceRange.json';
 
 function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
 
     const container_height = WINDOW_WIDTH * 0.2;
+    const scrollX = new Animated.Value(0);
 
     useEffect(() => {
         if (modalFilterVisible) {
@@ -61,12 +63,13 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
             <View style={styles.container}>
                 <Animated.View
                     style={[styles.sub_container, { transform: [{ translateY: modalY }] }]}
-                    {...gestureResponder.panHandlers}
                 >
-                    <View style={styles.indicator} />
-                    <View style={styles.title_container}>
-                        <Text style={styles.title_text}>Filter</Text>
-                        <Text style={styles.delete_text}>Hapus</Text>
+                    <View {...gestureResponder.panHandlers}>
+                        <View style={styles.indicator} />
+                        <View style={styles.title_container}>
+                            <Text style={styles.title_text}>Filter</Text>
+                            <Text style={styles.delete_text}>Hapus</Text>
+                        </View>
                     </View>
                     <View style={styles.price_container}>
                         <Text style={styles.price_title}>Kisaran Harga</Text>
@@ -100,6 +103,30 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
                             thumbTintColor={RED_COLOR}
                         />
                     </View>
+                    <View>
+                        <ScrollView
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            {priceRange.map((item, index) => (
+                                <View
+                                    key={index}
+                                    style={[
+                                        styles.price_range_content,
+                                        index == 0
+                                        ? { marginLeft: WINDOW_WIDTH * 0.05, marginRight: WINDOW_WIDTH * 0.025 }
+                                            : index + 1 == priceRange.length
+                                            ? { marginRight: WINDOW_WIDTH * 0.05 }
+                                        : { marginRight: WINDOW_WIDTH * 0.025 }
+                                    ]}
+                                >
+                                    <Text style={styles.price_range_text}>
+                                        {item}
+                                    </Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </Animated.View>
             </View>
         </Modal>
@@ -109,7 +136,7 @@ function Filter ({modalFilterVisible, setFilterModalVisible}: any) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        backgroundColor: BLACK_TRANSPARENT_COLOR
     },
     sub_container: {
         flex: 1,
@@ -181,6 +208,16 @@ const styles = StyleSheet.create({
     price_slider: {
         width: '100%',
         marginTop: WINDOW_WIDTH * 0.025
+    },
+    price_range_content: {
+        backgroundColor: GREY_COLOR,
+        padding: WINDOW_WIDTH * 0.025,
+        borderRadius: WINDOW_WIDTH * 0.05
+    },
+    price_range_text: {
+        color: BLACK_COLOR,
+        fontSize: WINDOW_WIDTH * 0.035,
+        fontWeight: 'bold'        
     }
 });
 

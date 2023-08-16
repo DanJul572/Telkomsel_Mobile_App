@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, Keyboard, TextInput, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView, Modal, Animated } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, TEXT_PLACEHOLDER_COLOR, WHITE_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH } from '../constans';
-import ProductCard from '../components/Internet/ProductCard';
 import products from '../dummy/products.json';
 import searchPopular from '../dummy/searchPopular.json';
 import searchHistory from '../dummy/searchHistory.json';
 import Filter from '../components/Search/Filter';
-import { useNavigation } from '@react-navigation/native';
+import { ProductCard } from '../components';
 
 function Search () {
     const [modaSortlVisible, setModaSortlVisible] = useState(false);
@@ -18,9 +18,9 @@ function Search () {
 
     const navigation = useNavigation();
 
-    const getHistoryComponent = (item: any) => {
+    const getHistoryComponent = (item: any, index: any) => {
         return (
-            <View style={styles.history_item_container}>
+            <View key={index} style={styles.history_item_container}>
                 <View style={styles.history_item_sub_container}>
                     <Icon name='clock' size={WINDOW_WIDTH * 0.05} style={styles.history_icon} />
                     <Text style={styles.history_text}>{item}</Text>
@@ -106,10 +106,7 @@ function Search () {
             {onSearch && !onFilter && (
                 <View style={styles.history_container}>
                     <Text style={styles.history_title}>Terakhir Dicari</Text>
-                    <FlatList
-                        data={searchHistory}
-                        renderItem={({ item }) => getHistoryComponent(item)}
-                    />
+                    {searchHistory.map((item, index) => getHistoryComponent(item, index))}
                 </View>
             )}
             {onSearch && !onFilter && (
@@ -128,11 +125,12 @@ function Search () {
                             onPress={() => {
                                 setFilterModalVisible(true);
                             }}
+                            activeOpacity={1}
                         >
                             <Icon name='filter' size={WINDOW_WIDTH * 0.035} color={RED_COLOR} />
                             <Text style={[styles.filter_sort_text, { color: RED_COLOR }]}>Filter</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.filter_sort_button}>
+                        <TouchableOpacity style={styles.filter_sort_button} activeOpacity={1}>
                             <Icon name='sort' size={WINDOW_WIDTH * 0.035} color={BLACK_COLOR} />
                             <Text style={[styles.filter_sort_text, { color: BLACK_COLOR }]}>Urutkan</Text>
                         </TouchableOpacity>
