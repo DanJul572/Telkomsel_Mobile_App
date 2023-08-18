@@ -1,10 +1,15 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import { BLACK_COLOR, GREY_COLOR, TEXT_PLACEHOLDER_COLOR, WINDOW_WIDTH } from '../../constans';
+import {View, TouchableOpacity, StyleSheet, TextInput} from 'react-native';
+import {
+    BLACK_COLOR,
+    GREY_COLOR,
+    TEXT_PLACEHOLDER_COLOR,
+    WINDOW_WIDTH,
+} from '../../constans';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-function FakeInput () {
+function FakeInput() {
     const navigation = useNavigation();
 
     return (
@@ -13,25 +18,28 @@ function FakeInput () {
             activeOpacity={1}
             onPress={() => {
                 navigation.navigate('Search' as never);
-            }}
-        >
+            }}>
             <View style={styles.search_icon_container}>
-                <Icon name='search' size={WINDOW_WIDTH * 0.05} style={styles.search_icon} />
+                <Icon
+                    name="search"
+                    size={WINDOW_WIDTH * 0.05}
+                    style={styles.search_icon}
+                />
             </View>
             <TextInput
-                style={[ styles.search_input, { width: WINDOW_WIDTH * 0.8 } ]}
-                placeholder='Cari paket vavorit kamu ...'
+                style={[styles.search_input, {width: WINDOW_WIDTH * 0.8}]}
+                placeholder="Cari paket vavorit kamu ..."
                 placeholderTextColor={TEXT_PLACEHOLDER_COLOR}
                 editable={false}
             />
         </TouchableOpacity>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     search_sub_container: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     search_icon_container: {
         padding: WINDOW_WIDTH * 0.02,
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: WINDOW_WIDTH * 0.01,
         borderBottomLeftRadius: WINDOW_WIDTH * 0.01,
         width: WINDOW_WIDTH * 0.1,
-        height: WINDOW_WIDTH * 0.1
+        height: WINDOW_WIDTH * 0.1,
     },
     search_icon: {
         color: TEXT_PLACEHOLDER_COLOR,
@@ -48,7 +56,7 @@ const styles = StyleSheet.create({
     search_input: {
         backgroundColor: GREY_COLOR,
         color: BLACK_COLOR,
-        height: WINDOW_WIDTH * 0.1
+        height: WINDOW_WIDTH * 0.1,
     },
 });
 

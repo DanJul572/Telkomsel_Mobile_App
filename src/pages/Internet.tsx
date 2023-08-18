@@ -1,13 +1,12 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { TopBar } from '../components';
-import { FakeInput, Promo, Subscribe } from '../components/Internet';
-import { WHITE_COLOR } from '../constans';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {TopBar} from '../components';
+import {FakeInput, Promo, Subscribe} from '../components/Internet';
+import {WHITE_COLOR} from '../constans';
 
-function Internet () {
-
+function Internet() {
     return (
-        <SafeAreaView style={{ backgroundColor: WHITE_COLOR }}>
+        <SafeAreaView style={{backgroundColor: WHITE_COLOR}}>
             <TopBar title={'Paket Internet'} />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <FakeInput />
@@ -15,7 +14,7 @@ function Internet () {
                 <Subscribe />
             </ScrollView>
         </SafeAreaView>
-    )
+    );
 }
 
 export default Internet;

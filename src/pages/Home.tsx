@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { Category, Info, NewContent } from '../components/Home';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {Category, Info, NewContent} from '../components/Home';
 
-function Home () {
+function Home() {
     return (
         <SafeAreaView>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Info/>
-                <Category/>
-                <NewContent/>
+                <Info />
+                <Category />
+                <NewContent />
             </ScrollView>
         </SafeAreaView>
     );

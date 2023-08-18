@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -24,5 +24,5 @@ export {
     GREY_COLOR,
     TEXT_PLACEHOLDER_COLOR,
     BORDER_TEXT_INPUT_COLOR,
-    BLACK_TRANSPARENT_COLOR
-}
+    BLACK_TRANSPARENT_COLOR,
+};

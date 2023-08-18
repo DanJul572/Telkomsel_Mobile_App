@@ -1,10 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { BLACK_COLOR, BORDER_TEXT_INPUT_COLOR, DARK_GREY_COLOR, GREY_COLOR, RED_COLOR, WHITE_COLOR, WINDOW_WIDTH } from '../constans';
+import {
+    BLACK_COLOR,
+    BORDER_TEXT_INPUT_COLOR,
+    DARK_GREY_COLOR,
+    GREY_COLOR,
+    RED_COLOR,
+    WHITE_COLOR,
+    WINDOW_WIDTH,
+} from '../constans';
 
-function ProductCard ({product, isFirst, isLast, isHorizontal}: any) {
-
+function ProductCard({product, isFirst, isHorizontal}: any) {
     const getWidth = () => {
         if (isHorizontal) {
             if (isFirst) {
@@ -15,30 +22,42 @@ function ProductCard ({product, isFirst, isLast, isHorizontal}: any) {
         } else {
             return styles.horizontal_style;
         }
-    }
+    };
 
     return (
-        <View
-            style={[ styles.container, getWidth() ]}>
+        <View style={[styles.container, getWidth()]}>
             <View style={styles.sub_container}>
                 <View style={styles.sub_container}>
                     <Text style={styles.value_text}>{product.text_value}</Text>
                     <View style={styles.expired_container}>
-                        <Icon name='hourglass-half' color={BLACK_COLOR} size={WINDOW_WIDTH * 0.03} />
-                        <Text style={styles.expired_text}>{product.expired}</Text>
+                        <Icon
+                            name="hourglass-half"
+                            color={BLACK_COLOR}
+                            size={WINDOW_WIDTH * 0.03}
+                        />
+                        <Text style={styles.expired_text}>
+                            {product.expired}
+                        </Text>
                     </View>
                 </View>
-                <Icon name='bookmark' color={GREY_COLOR} size={WINDOW_WIDTH * 0.05} solid />
+                <Icon
+                    name="bookmark"
+                    color={GREY_COLOR}
+                    size={WINDOW_WIDTH * 0.05}
+                    solid
+                />
             </View>
             <View style={styles.sub_container_2}>
                 <View>
                     <Text style={styles.price_text}>{product.price}</Text>
-                    <Text style={styles.discount_price_text}>{product.discount_price}</Text>
+                    <Text style={styles.discount_price_text}>
+                        {product.discount_price}
+                    </Text>
                 </View>
                 <Text style={styles.title_text}>{product.title}</Text>
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -52,15 +71,15 @@ const styles = StyleSheet.create({
     },
     first_container: {
         marginLeft: WINDOW_WIDTH * 0.05,
-        width: WINDOW_WIDTH * 0.75
+        width: WINDOW_WIDTH * 0.75,
     },
     last_container: {
         marginRight: WINDOW_WIDTH * 0.05,
-        width: WINDOW_WIDTH * 0.75
+        width: WINDOW_WIDTH * 0.75,
     },
     horizontal_style: {
         marginBottom: WINDOW_WIDTH * 0.035,
-        width: '100%'
+        width: '100%',
     },
     sub_container: {
         flexDirection: 'row',
@@ -70,7 +89,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'space-between',
-        marginTop: WINDOW_WIDTH * 0.05
+        marginTop: WINDOW_WIDTH * 0.05,
     },
     value_text: {
         color: BLACK_COLOR,
@@ -90,22 +109,22 @@ const styles = StyleSheet.create({
     expired_text: {
         color: BLACK_COLOR,
         fontSize: WINDOW_WIDTH * 0.035,
-        marginLeft: WINDOW_WIDTH * 0.02
+        marginLeft: WINDOW_WIDTH * 0.02,
     },
     discount_price_text: {
         color: RED_COLOR,
         fontWeight: 'bold',
-        fontSize: WINDOW_WIDTH * 0.05
+        fontSize: WINDOW_WIDTH * 0.05,
     },
     price_text: {
         color: DARK_GREY_COLOR,
         fontSize: WINDOW_WIDTH * 0.035,
-        textDecorationLine: 'line-through'
+        textDecorationLine: 'line-through',
     },
     title_text: {
         color: BLACK_COLOR,
         fontSize: WINDOW_WIDTH * 0.05,
-    }
+    },
 });
 
 export default ProductCard;
