@@ -25,6 +25,7 @@ import {
 import priceRange from '../../dummy/priceRange.json';
 import categories from '../../dummy/categories.json';
 import expired from '../../dummy/expired.json';
+import offers from '../../dummy/offers.json';
 
 function Filter({modalFilterVisible, setFilterModalVisible}: any) {
     const container_height = WINDOW_WIDTH * 0.576;
@@ -32,6 +33,7 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
 
     const [activeCategory, setActiveCategory] = useState(null);
     const [activeExpired, setActiveExpired] = useState(null);
+    const [activeOffer, setActiveOffer] = useState(null);
 
     useEffect(() => {
         if (modalFilterVisible) {
@@ -91,22 +93,28 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
 
         if (item.isExpired) {
             if (item.index === activeExpired) {
-                arr.push(styles.category_and_expired_container_active);
+                arr.push(styles.filter_item_container_active);
             } else {
-                arr.push(styles.category_and_expired_container);
+                arr.push(styles.filter_item_container);
+            }
+        } else if (item.isOffer) {
+            if (item.index === activeOffer) {
+                arr.push(styles.filter_item_container_active);
+            } else {
+                arr.push(styles.filter_item_container);
             }
         } else {
             if (item.index === activeCategory) {
-                arr.push(styles.category_and_expired_container_active);
+                arr.push(styles.filter_item_container_active);
             } else {
-                arr.push(styles.category_and_expired_container);
+                arr.push(styles.filter_item_container);
             }
         }
 
         return arr;
     };
 
-    const getExpiredAndCategoryContent = (item: any) => {
+    const getFilterItems = (item: any) => {
         return (
             <TouchableOpacity
                 key={item.index}
@@ -115,6 +123,8 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                 onPress={() =>
                     item.isExpired
                         ? setActiveExpired(item.index)
+                        : item.isOffer
+                        ? setActiveOffer(item.index)
                         : setActiveCategory(item.index)
                 }>
                 {item.isExpired && (
@@ -133,7 +143,11 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                 <Text
                     style={
                         item.index ===
-                        (item.isExpired ? activeExpired : activeCategory)
+                        (item.isExpired
+                            ? activeExpired
+                            : item.isOffer
+                            ? activeOffer
+                            : activeCategory)
                             ? styles.category_and_expired_text_active
                             : styles.category_and_expired_text
                     }>
@@ -241,9 +255,9 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                                     ))}
                                 </ScrollView>
                             </View>
-                            <View style={styles.category_container}>
-                                <View style={styles.category_head_container}>
-                                    <Text style={styles.category_title}>
+                            <View style={styles.filter_container}>
+                                <View style={styles.filter_head_container}>
+                                    <Text style={styles.filter_title}>
                                         Kategori
                                     </Text>
                                     <Text style={styles.category_button}>
@@ -264,15 +278,13 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                                                     ? true
                                                     : false,
                                         };
-                                        return getExpiredAndCategoryContent(
-                                            data,
-                                        );
+                                        return getFilterItems(data);
                                     })}
                                 </ScrollView>
                             </View>
-                            <View style={styles.category_container}>
-                                <View style={styles.category_head_container}>
-                                    <Text style={styles.category_title}>
+                            <View style={styles.filter_container}>
+                                <View style={styles.filter_head_container}>
+                                    <Text style={styles.filter_title}>
                                         Masa Aktif
                                     </Text>
                                 </View>
@@ -291,9 +303,32 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                                                     : false,
                                             isExpired: true,
                                         };
-                                        return getExpiredAndCategoryContent(
-                                            data,
-                                        );
+                                        return getFilterItems(data);
+                                    })}
+                                </ScrollView>
+                            </View>
+                            <View style={styles.filter_container}>
+                                <View style={styles.filter_head_container}>
+                                    <Text style={styles.filter_title}>
+                                        Penawaran
+                                    </Text>
+                                </View>
+                                <ScrollView
+                                    horizontal={true}
+                                    showsHorizontalScrollIndicator={false}>
+                                    {offers.map((item, index) => {
+                                        let data = {
+                                            name: item,
+                                            index: index,
+                                            active: index === 2 ? true : false,
+                                            isFirst: index === 0 ? true : false,
+                                            isLast:
+                                                index + 1 === offers.length
+                                                    ? true
+                                                    : false,
+                                            isOffer: true,
+                                        };
+                                        return getFilterItems(data);
                                     })}
                                 </ScrollView>
                             </View>
@@ -399,16 +434,16 @@ const styles = StyleSheet.create({
         fontSize: WINDOW_WIDTH * 0.035,
         fontWeight: 'bold',
     },
-    category_container: {
+    filter_container: {
         marginTop: WINDOW_WIDTH * 0.025,
     },
-    category_head_container: {
+    filter_head_container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: WINDOW_WIDTH * 0.05,
     },
-    category_title: {
+    filter_title: {
         color: BLACK_COLOR,
         fontSize: WINDOW_WIDTH * 0.045,
         fontWeight: 'bold',
@@ -418,7 +453,7 @@ const styles = StyleSheet.create({
         fontSize: WINDOW_WIDTH * 0.035,
         fontWeight: 'bold',
     },
-    category_and_expired_container: {
+    filter_item_container: {
         backgroundColor: GREY_COLOR,
         padding: WINDOW_WIDTH * 0.025,
         borderRadius: WINDOW_WIDTH * 0.05,
@@ -426,7 +461,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    category_and_expired_container_active: {
+    filter_item_container_active: {
         backgroundColor: 'rgba(236, 32, 40, 0.2)',
         padding: WINDOW_WIDTH * 0.025,
         borderRadius: WINDOW_WIDTH * 0.05,
