@@ -24,11 +24,11 @@ import {
 import products from '../dummy/products.json';
 import searchPopular from '../dummy/searchPopular.json';
 import searchHistory from '../dummy/searchHistory.json';
-import Filter from '../components/Search/Filter';
+import {Sort, Filter} from '../components/Search';
 import {ProductCard} from '../components';
 
 function Search() {
-    // const [modaSortlVisible, setModaSortlVisible] = useState(false);
+    const [sortModalVisible, setSortModalVisible] = useState(false);
     const [modalFilterVisible, setFilterModalVisible] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [onSearch, setOnSearch] = useState(false);
@@ -195,6 +195,9 @@ function Search() {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onPress={() => {
+                                setSortModalVisible(true);
+                            }}
                             style={styles.filter_sort_button}
                             activeOpacity={1}>
                             <Icon
@@ -232,6 +235,10 @@ function Search() {
             <Filter
                 modalFilterVisible={modalFilterVisible}
                 setFilterModalVisible={setFilterModalVisible}
+            />
+            <Sort
+                sortModalVisible={sortModalVisible}
+                setSortModalVisible={setSortModalVisible}
             />
         </View>
     );

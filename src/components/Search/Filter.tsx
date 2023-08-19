@@ -31,6 +31,7 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
     const container_height = WINDOW_WIDTH * 0.576;
     const modalY = useRef(new Animated.Value(container_height)).current;
 
+    const [activePriceRange, setActivePriceRange] = useState(null);
     const [activeCategory, setActiveCategory] = useState(null);
     const [activeExpired, setActiveExpired] = useState(null);
     const [activeOffer, setActiveOffer] = useState(null);
@@ -103,6 +104,12 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
             } else {
                 arr.push(styles.filter_item_container);
             }
+        } else if (item.isPriceRange) {
+            if (item.index === activePriceRange) {
+                arr.push(styles.filter_item_container_active);
+            } else {
+                arr.push(styles.filter_item_container);
+            }
         } else {
             if (item.index === activeCategory) {
                 arr.push(styles.filter_item_container_active);
@@ -125,6 +132,8 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                         ? setActiveExpired(item.index)
                         : item.isOffer
                         ? setActiveOffer(item.index)
+                        : item.isPriceRange
+                        ? setActivePriceRange(item.index)
                         : setActiveCategory(item.index)
                 }>
                 {item.isExpired && (
@@ -132,8 +141,7 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                         name="hourglass-half"
                         size={WINDOW_WIDTH * 0.03}
                         color={
-                            item.index ===
-                            (item.isExpired ? activeExpired : activeCategory)
+                            item.index === activeExpired
                                 ? RED_COLOR
                                 : BLACK_COLOR
                         }
@@ -147,9 +155,11 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                             ? activeExpired
                             : item.isOffer
                             ? activeOffer
+                            : item.isPriceRange
+                            ? activePriceRange
                             : activeCategory)
-                            ? styles.category_and_expired_text_active
-                            : styles.category_and_expired_text
+                            ? styles.filter_item_text_active
+                            : styles.filter_item_text
                     }>
                     {item.name}
                 </Text>
@@ -220,39 +230,20 @@ function Filter({modalFilterVisible, setFilterModalVisible}: any) {
                                 <ScrollView
                                     horizontal={true}
                                     showsHorizontalScrollIndicator={false}>
-                                    {priceRange.map((item, index) => (
-                                        <View
-                                            key={index}
-                                            style={[
-                                                styles.price_range_content,
-                                                index === 0
-                                                    ? {
-                                                          marginLeft:
-                                                              WINDOW_WIDTH *
-                                                              0.05,
-                                                          marginRight:
-                                                              WINDOW_WIDTH *
-                                                              0.025,
-                                                      }
-                                                    : index + 1 ===
-                                                      priceRange.length
-                                                    ? {
-                                                          marginRight:
-                                                              WINDOW_WIDTH *
-                                                              0.05,
-                                                      }
-                                                    : {
-                                                          marginRight:
-                                                              WINDOW_WIDTH *
-                                                              0.025,
-                                                      },
-                                            ]}>
-                                            <Text
-                                                style={styles.price_range_text}>
-                                                {item}
-                                            </Text>
-                                        </View>
-                                    ))}
+                                    {priceRange.map((item, index) => {
+                                        let data = {
+                                            name: item,
+                                            index: index,
+                                            active: index === 2 ? true : false,
+                                            isFirst: index === 0 ? true : false,
+                                            isLast:
+                                                index + 1 === priceRange.length
+                                                    ? true
+                                                    : false,
+                                            isPriceRange: true,
+                                        };
+                                        return getFilterItems(data);
+                                    })}
                                 </ScrollView>
                             </View>
                             <View style={styles.filter_container}>
@@ -469,13 +460,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    category_and_expired_text: {
+    filter_item_text: {
         color: BLACK_COLOR,
-        fontSize: WINDOW_WIDTH * 0.045,
+        fontSize: WINDOW_WIDTH * 0.035,
+        fontWeight: 'bold',
     },
-    category_and_expired_text_active: {
+    filter_item_text_active: {
         color: RED_COLOR,
-        fontSize: WINDOW_WIDTH * 0.045,
+        fontSize: WINDOW_WIDTH * 0.035,
+        fontWeight: 'bold',
     },
     filter_button_container: {
         paddingHorizontal: WINDOW_WIDTH * 0.05,
