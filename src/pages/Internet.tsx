@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {TopBar} from '../components';
-import {FakeInput, Promo, Subscribe} from '../components/Internet';
+import {FakeInput, Promo, Subscribe, Category} from '../components/Internet';
 import {WHITE_COLOR} from '../constans';
 
 function Internet() {
@@ -12,6 +12,7 @@ function Internet() {
                 <FakeInput />
                 <Promo />
                 <Subscribe />
+                <Category />
             </ScrollView>
         </SafeAreaView>
     );
