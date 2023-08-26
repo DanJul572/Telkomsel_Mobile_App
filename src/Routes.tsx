@@ -2,7 +2,16 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Home, History, Help, Inbox, MyAccount, Internet, Search} from './pages';
+import {
+    Home,
+    History,
+    Help,
+    Inbox,
+    MyAccount,
+    Internet,
+    Search,
+    Welcome,
+} from './pages';
 import {BottomTabNavigation} from './components';
 
 const Tab = createBottomTabNavigator();
@@ -14,7 +23,9 @@ function getBottomTabNavigation(props: any) {
 
 function TabNavigator() {
     return (
-        <Tab.Navigator tabBar={props => getBottomTabNavigation(props)}>
+        <Tab.Navigator
+            tabBar={props => getBottomTabNavigation(props)}
+            initialRouteName="Home">
             <Tab.Screen
                 name="Home"
                 component={Home}
@@ -47,7 +58,7 @@ function TabNavigator() {
 function Routes() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="Welcome">
                 <Stack.Screen
                     name="Tab"
                     component={TabNavigator}
@@ -61,6 +72,11 @@ function Routes() {
                 <Stack.Screen
                     name="Search"
                     component={Search}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
                     options={{headerShown: false}}
                 />
             </Stack.Navigator>
