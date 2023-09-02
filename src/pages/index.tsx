@@ -6,5 +6,16 @@ import MyAccount from './MyAccount';
 import Internet from './Internet';
 import Search from './Search';
 import Welcome from './Welcome';
+import Login from './Login';
 
-export {Home, History, Inbox, Help, MyAccount, Internet, Search, Welcome};
+export {
+    Home,
+    History,
+    Inbox,
+    Help,
+    MyAccount,
+    Internet,
+    Search,
+    Welcome,
+    Login,
+};

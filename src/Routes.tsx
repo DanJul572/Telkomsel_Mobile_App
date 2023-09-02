@@ -11,6 +11,7 @@ import {
     Internet,
     Search,
     Welcome,
+    Login,
 } from './pages';
 import {BottomTabNavigation} from './components';
 
@@ -77,6 +78,11 @@ function Routes() {
                 <Stack.Screen
                     name="Welcome"
                     component={Welcome}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Login"
+                    component={Login}
                     options={{headerShown: false}}
                 />
             </Stack.Navigator>

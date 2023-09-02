@@ -2,14 +2,21 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Image} from 'react-native';
 import {RED_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH} from '../constans';
 import {useNavigation} from '@react-navigation/native';
+import {checkUser} from '../helpers';
 
 const Welcome = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('Tab' as never);
-        }, 1000);
+        checkUser().then(exist => {
+            setTimeout(() => {
+                if (exist) {
+                    navigation.navigate('Tab' as never);
+                } else {
+                    navigation.navigate('Login' as never);
+                }
+            }, 1000);
+        });
     }, [navigation]);
 
     return (
